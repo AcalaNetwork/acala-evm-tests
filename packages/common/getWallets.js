@@ -1,8 +1,7 @@
 import { options } from "@acala-network/api";
 import { WsProvider } from "@polkadot/api";
 import testingPairs from "@polkadot/keyring/testingPairs";
-import { Provider } from "../src/Provider";
-import { Wallet } from "../src/Wallet";
+import { Provider, Wallet } from "@acala-network/bodhi";
 import { addressToEvm, evmToAddress } from "@polkadot/util-crypto";
 import { Sequelize } from "sequelize";
 import { Op, SyncOptions } from "sequelize";

@@ -11,7 +11,13 @@
   "author": "Acala Developers <hello@acala.network>",
   "license": "MIT",
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/register": "^7.12.1",
     "@types/chai": "^4.2.14",
     "@types/mocha": "^8.0.4"
+  },
+  "devDependencies": {
+    "@open-web3/dev-config": "^0.1.6"
   }
 }
