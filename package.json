@@ -1,0 +1,17 @@
+{
+  "name": "acala-evm-tests",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "repository": "git@github.com:AcalaNetwork/acala-evm-tests.git",
+  "author": "Acala Developers <hello@acala.network>",
+  "license": "MIT",
+  "dependencies": {
+    "@types/chai": "^4.2.14",
+    "@types/mocha": "^8.0.4"
+  }
+}
