@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "build": "npx waffle .waffle",
-    "test": "npx mocha -r @babel/register"
+    "test": "TS_NODE_TRANSPILE_ONLY=true npx mocha -r ts-node/register -r tsconfig-paths/register"
   },
   "dependencies": {
     "ethereum-waffle": "^3.2.1",

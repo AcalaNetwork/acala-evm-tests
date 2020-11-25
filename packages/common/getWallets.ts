@@ -16,7 +16,7 @@ export function createWallet(numbers = 5) {
   });
 }
 
-export function getWallet() {
+export function getWallets() {
   const provider = getProvider();
 
   const wallets = [

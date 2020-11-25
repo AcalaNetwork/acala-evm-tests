@@ -20,6 +20,8 @@
   "devDependencies": {
     "@open-web3/dev-config": "^0.1.6",
     "chai": "^4.2.0",
-    "mocha": "^8.2.1"
+    "mocha": "^8.2.1",
+    "ts-node": "^9.0.0",
+    "tsconfig-paths": "^3.9.0"
   }
 }

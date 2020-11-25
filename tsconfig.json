@@ -1,0 +1,35 @@
+{
+  "extends": "@open-web3/dev-config/config/tsconfig.json",
+  "exclude": [
+    "build/**/*",
+    "**/build/**/*",
+    "node_modules"
+  ],
+  "include": [
+    "packages/common/",
+    "packages/linkdrop/",
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "noImplicitAny": false,
+    "noUnusedLocals": false,
+    "noImplicitReturns": false,
+    "target": "ESNEXT",
+    "module": "commonjs",
+    "resolveJsonModule": true,
+    "paths": {
+      "common": [
+        "packages/common/"
+      ],
+      "common/*": [
+        "packages/common/*"
+      ],
+    },
+    "strict": false,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "typeRoots": [
+      "./node_modules/@types"
+    ]
+  }
+}

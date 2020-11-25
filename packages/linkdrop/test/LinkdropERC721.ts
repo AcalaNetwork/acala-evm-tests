@@ -16,9 +16,12 @@ import {
   computeBytecode,
 } from "../scripts/utils";
 
+import { getWallet, getProvider, createWallet } from "common";
+
 chai.use(solidity);
 const { expect } = chai;
 
+// console.log(getProvider)
 let provider = new MockProvider();
 
 let [
@@ -53,11 +56,10 @@ const campaignId = 0;
 describe("ETH/ERC721 linkdrop tests", () => {
   before(async () => {
     nftInstance = await deployContract(linkdropMaster, NFTMock);
-    console.log('1')
   });
 
   before(async () => {
-    console.log('2')
+    console.log("2");
   });
 
   it("should deploy master copy of linkdrop implementation", async () => {

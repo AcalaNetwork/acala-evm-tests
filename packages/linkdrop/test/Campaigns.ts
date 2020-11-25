@@ -10,6 +10,7 @@ import LinkdropMastercopy from "../build/LinkdropMastercopy";
 import TokenMock from "../build/TokenMock";
 
 import { computeProxyAddress, computeBytecode } from "../scripts/utils";
+import { getWallet, getProvider, createWallet } from "common";
 
 chai.use(solidity);
 const { expect } = chai;
