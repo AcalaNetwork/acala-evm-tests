@@ -1,6 +1,7 @@
 /* global describe, before, it */
 
 import chai from "chai";
+import { ethers } from "ethers";
 
 import { MockProvider, deployContract, solidity } from "ethereum-waffle";
 
@@ -14,11 +15,6 @@ import {
   signReceiverAddress,
   computeBytecode,
 } from "../scripts/utils";
-
-const ethers = require("ethers");
-
-// Turn off annoying warnings
-ethers.errors.setLogLevel("error");
 
 chai.use(solidity);
 const { expect } = chai;

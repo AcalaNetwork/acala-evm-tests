@@ -1,6 +1,7 @@
 /* global describe, before, it */
 
 import chai from "chai";
+import { ethers } from "ethers";
 
 import { deployContract, MockProvider, solidity } from "ethereum-waffle";
 
@@ -9,11 +10,6 @@ import LinkdropMastercopy from "../build/LinkdropMastercopy";
 import TokenMock from "../build/TokenMock";
 
 import { computeProxyAddress, computeBytecode } from "../scripts/utils";
-
-const ethers = require("ethers");
-
-// Turn off annoying warnings
-ethers.errors.setLogLevel("error");
 
 chai.use(solidity);
 const { expect } = chai;

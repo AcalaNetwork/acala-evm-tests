@@ -1,6 +1,7 @@
 /* global describe, before, it */
 
 import chai from "chai";
+import { ethers } from "ethers";
 
 import { MockProvider, deployContract, solidity } from "ethereum-waffle";
 
@@ -14,11 +15,6 @@ import {
   signReceiverAddress,
   computeBytecode,
 } from "../scripts/utils";
-
-const ethers = require("ethers");
-
-// Turn off annoying warnings
-ethers.errors.setLogLevel("error");
 
 chai.use(solidity);
 const { expect } = chai;
@@ -57,6 +53,11 @@ const campaignId = 0;
 describe("ETH/ERC721 linkdrop tests", () => {
   before(async () => {
     nftInstance = await deployContract(linkdropMaster, NFTMock);
+    console.log('1')
+  });
+
+  before(async () => {
+    console.log('2')
   });
 
   it("should deploy master copy of linkdrop implementation", async () => {
@@ -406,9 +407,7 @@ describe("ETH/ERC721 linkdrop tests", () => {
         receiverSignature,
         { gasLimit: 500000 }
       )
-    ).to.be.revertedWith(
-      "revert ERC721: transfer caller is not owner nor approved"
-    );
+    ).to.be.reverted;
   });
 
   it("should fail to claim nft by expired link", async () => {

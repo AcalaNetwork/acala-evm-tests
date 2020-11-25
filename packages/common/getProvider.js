@@ -1,6 +1,6 @@
 import { options } from "@acala-network/api";
 import { Provider } from "@acala-network/bodhi";
-import * as DataProvider from "@acala-network/bodhi/DataProvider";
+import { DataProvider } from "@acala-network/bodhi/DataProvider";
 import { WsProvider } from "@polkadot/api";
 import { Sequelize } from "sequelize";
 

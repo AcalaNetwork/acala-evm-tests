@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "npx waffle .waffle"
+    "build": "npx waffle .waffle",
+    "test": "npx mocha -r @babel/register"
   },
   "dependencies": {
     "ethereum-waffle": "^3.2.1",

@@ -18,6 +18,8 @@
     "@types/mocha": "^8.0.4"
   },
   "devDependencies": {
-    "@open-web3/dev-config": "^0.1.6"
+    "@open-web3/dev-config": "^0.1.6",
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1"
   }
 }

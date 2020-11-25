@@ -1,6 +1,7 @@
 /* global describe, it */
 
 import chai from "chai";
+import { ethers } from "ethers";
 
 import { MockProvider, deployContract, solidity } from "ethereum-waffle";
 
@@ -8,10 +9,6 @@ import LinkdropFactory from "../build/LinkdropFactory";
 import LinkdropMastercopy from "../build/LinkdropMastercopy";
 
 import { computeBytecode, computeProxyAddress } from "../scripts/utils";
-
-const ethers = require("ethers");
-// Turn off annoying warnings
-ethers.errors.setLogLevel("error");
 
 chai.use(solidity);
 const { expect } = chai;
@@ -174,7 +171,7 @@ describe("Proxy upgradability tests", () => {
         [linkdropMaster.address, campaignId]
       )
     );
-    expect(deployedAddress).to.eq(ethers.constants.AddressZero);
+    expect(deployedAddress[0]).to.eq(ethers.constants.AddressZero);
   });
 
   it("should deploy upgraded proxy to the same address as before", async () => {
