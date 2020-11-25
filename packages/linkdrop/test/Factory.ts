@@ -2,12 +2,14 @@
 
 import chai from "chai";
 import { ethers } from "ethers";
+import { initAccount } from "common";
 
 import { MockProvider, deployContract, solidity } from "ethereum-waffle";
+import { initWallets } from "../utils/initWallets";
 
-import LinkdropFactory from "../build/LinkdropFactory";
-import LinkdropMastercopy from "../build/LinkdropMastercopy";
-import TokenMock from "../build/TokenMock";
+import LinkdropFactory from "../build/LinkdropFactory.json";
+import LinkdropMastercopy from "../build/LinkdropMastercopy.json";
+import TokenMock from "../build/TokenMock.json";
 
 import {
   computeProxyAddress,
@@ -19,9 +21,9 @@ import {
 chai.use(solidity);
 const { expect } = chai;
 
-let provider = new MockProvider();
+let { provider, wallets } = initWallets((process.env as any).MOCK);
 
-let [linkdropMaster, linkdropSigner, relayer] = provider.getWallets(provider);
+let [linkdropMaster, linkdropSigner, relayer] = wallets;
 
 let masterCopy;
 let factory;
@@ -46,12 +48,15 @@ const chainId = 4; // Rinkeby
 
 describe("Factory tests", () => {
   before(async () => {
+    if (!(process.env as any).MOCK) {
+      await initAccount(provider, wallets);
+    }
     tokenInstance = await deployContract(linkdropMaster, TokenMock);
   });
 
   it("should deploy master copy of linkdrop implementation", async () => {
     masterCopy = await deployContract(linkdropMaster, LinkdropMastercopy, [], {
-      gasLimit: 6000000,
+      gasLimit: 300_000_000,
     });
     expect(masterCopy.address).to.not.eq(ethers.constants.AddressZero);
   });
@@ -63,7 +68,7 @@ describe("Factory tests", () => {
       LinkdropFactory,
       [masterCopy.address, chainId],
       {
-        gasLimit: 6000000,
+        gasLimit: 300_000_000,
       }
     );
 
@@ -86,7 +91,7 @@ describe("Factory tests", () => {
     await expect(
       factory.deployProxyWithSigner(campaignId, linkdropSigner.address, {
         value,
-        gasLimit: 6000000,
+        gasLimit: 300_000_000,
       })
     ).to.emit(factory, "Deployed");
 

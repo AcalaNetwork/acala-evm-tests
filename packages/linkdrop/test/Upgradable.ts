@@ -2,20 +2,22 @@
 
 import chai from "chai";
 import { ethers } from "ethers";
+import { initAccount } from "common";
 
 import { MockProvider, deployContract, solidity } from "ethereum-waffle";
+import { initWallets } from "../utils/initWallets";
 
-import LinkdropFactory from "../build/LinkdropFactory";
-import LinkdropMastercopy from "../build/LinkdropMastercopy";
+import LinkdropFactory from "../build/LinkdropFactory.json";
+import LinkdropMastercopy from "../build/LinkdropMastercopy.json";
 
 import { computeBytecode, computeProxyAddress } from "../scripts/utils";
 
 chai.use(solidity);
 const { expect } = chai;
 
-let provider = new MockProvider();
+let { provider, wallets } = initWallets((process.env as any).MOCK);
 
-let [linkdropMaster, deployer, relayer] = provider.getWallets(provider);
+let [linkdropMaster, deployer, relayer] = wallets;
 
 let masterCopy;
 let factory;
@@ -27,11 +29,16 @@ const chainId = 4; // Rinkeby
 const campaignId = 0;
 
 describe("Proxy upgradability tests", () => {
-  //
+  before(async () => {
+    if (!(process.env as any).MOCK) {
+      await initAccount(provider, wallets);
+    }
+  });
+
 
   it("should deploy initial master copy of linkdrop implementation", async () => {
     masterCopy = await deployContract(deployer, LinkdropMastercopy, [], {
-      gasLimit: 6000000,
+      gasLimit: 3_000_000_000,
     });
     expect(masterCopy.address).to.not.eq(ethers.constants.AddressZero);
 
@@ -54,7 +61,7 @@ describe("Proxy upgradability tests", () => {
       LinkdropFactory,
       [masterCopy.address, chainId],
       {
-        gasLimit: 6000000,
+        gasLimit: 3_000_000_000,
       }
     );
     expect(factory.address).to.not.eq(ethers.constants.AddressZero);
@@ -90,7 +97,7 @@ describe("Proxy upgradability tests", () => {
 
     await expect(
       factory.deployProxy(campaignId, {
-        gasLimit: 6000000,
+        gasLimit: 3_000_000_000,
       })
     ).to.emit(factory, "Deployed");
 
@@ -113,7 +120,7 @@ describe("Proxy upgradability tests", () => {
   it("should deploy second version of mastercopy", async () => {
     let oldMasterCopyAddress = masterCopy.address;
     masterCopy = await deployContract(deployer, LinkdropMastercopy, [], {
-      gasLimit: 6000000,
+      gasLimit: 3_000_000_000,
     });
 
     expect(masterCopy.address).to.not.eq(ethers.constants.AddressZero);
@@ -158,7 +165,7 @@ describe("Proxy upgradability tests", () => {
 
     await expect(
       factory.destroyProxy(campaignId, {
-        gasLimit: 6400000,
+        gasLimit: 3_000_000_000,
       })
     ).to.emit(factory, "Destroyed");
 
@@ -177,7 +184,7 @@ describe("Proxy upgradability tests", () => {
   it("should deploy upgraded proxy to the same address as before", async () => {
     await expect(
       factory.deployProxy(campaignId, {
-        gasLimit: 6400000,
+        gasLimit: 3_000_000_000,
       })
     ).to.emit(factory, "Deployed");
 

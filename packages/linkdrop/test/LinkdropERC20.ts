@@ -2,12 +2,15 @@
 
 import chai from "chai";
 import { ethers } from "ethers";
+import { initAccount } from "common";
 
 import { MockProvider, deployContract, solidity } from "ethereum-waffle";
+import { initWallets } from "../utils/initWallets";
+import { supportRevertedWith } from "../utils/hackRevertedWith";
 
-import LinkdropFactory from "../build/LinkdropFactory";
-import LinkdropMastercopy from "../build/LinkdropMastercopy";
-import TokenMock from "../build/TokenMock";
+import LinkdropFactory from "../build/LinkdropFactory.json";
+import LinkdropMastercopy from "../build/LinkdropMastercopy.json";
+import TokenMock from "../build/TokenMock.json";
 
 import {
   computeProxyAddress,
@@ -17,17 +20,15 @@ import {
 } from "../scripts/utils";
 
 chai.use(solidity);
+chai.use(function waffleChai(chai, utils) {
+  supportRevertedWith(chai.Assertion);
+});
+
 const { expect } = chai;
 
-let provider = new MockProvider();
+let { provider, wallets } = initWallets((process.env as any).MOCK);
 
-let [
-  linkdropMaster,
-  receiver,
-  nonsender,
-  linkdropSigner,
-  relayer,
-] = provider.getWallets(provider);
+let [linkdropMaster, receiver, nonsender, linkdropSigner, relayer] = wallets;
 
 let masterCopy;
 let factory;
@@ -53,12 +54,15 @@ const chainId = 4; // Rinkeby
 
 describe("ETH/ERC20 linkdrop tests", () => {
   before(async () => {
+    if (!(process.env as any).MOCK) {
+      await initAccount(provider, wallets);
+    }
     tokenInstance = await deployContract(linkdropMaster, TokenMock);
   });
 
   it("should deploy master copy of linkdrop implementation", async () => {
     masterCopy = await deployContract(linkdropMaster, LinkdropMastercopy, [], {
-      gasLimit: 6000000,
+      gasLimit: 3_000_000_000,
     });
     expect(masterCopy.address).to.not.eq(ethers.constants.AddressZero);
   });
@@ -70,7 +74,7 @@ describe("ETH/ERC20 linkdrop tests", () => {
       LinkdropFactory,
       [masterCopy.address, chainId],
       {
-        gasLimit: 6000000,
+        gasLimit: 3_000_000_000,
       }
     );
 
@@ -95,7 +99,7 @@ describe("ETH/ERC20 linkdrop tests", () => {
 
     await expect(
       factory.deployProxy(campaignId, {
-        gasLimit: 6000000,
+        gasLimit: 3_000_000_000,
       })
     ).to.emit(factory, "Deployed");
 
@@ -123,11 +127,11 @@ describe("ETH/ERC20 linkdrop tests", () => {
   it("linkdropMaster should be able to add new signing keys", async () => {
     let isSigner = await proxy.isLinkdropSigner(linkdropSigner.address);
     expect(isSigner).to.eq(false);
-    await proxy.addSigner(linkdropSigner.address, { gasLimit: 500000 });
+    await proxy.addSigner(linkdropSigner.address, { gasLimit: 3_000_000_000 });
     isSigner = await proxy.isLinkdropSigner(linkdropSigner.address);
     expect(isSigner).to.eq(true);
 
-    await proxy.addSigner(receiver.address, { gasLimit: 500000 });
+    await proxy.addSigner(receiver.address, { gasLimit: 3_000_000_000 });
   });
 
   it("non linkdropMaster should not be able to remove signing key", async () => {
@@ -141,7 +145,7 @@ describe("ETH/ERC20 linkdrop tests", () => {
     expect(isSigner).to.eq(true);
 
     await expect(
-      proxyInstance.removeSigner(receiver.address, { gasLimit: 500000 })
+      proxyInstance.removeSigner(receiver.address, { gasLimit: 3_000_000_000 })
     ).to.be.revertedWith("ONLY_LINKDROP_MASTER");
     isSigner = await proxyInstance.isLinkdropSigner(receiver.address);
     expect(isSigner).to.eq(true);
@@ -151,7 +155,7 @@ describe("ETH/ERC20 linkdrop tests", () => {
     let isSigner = await proxy.isLinkdropSigner(receiver.address);
     expect(isSigner).to.eq(true);
 
-    await proxy.removeSigner(receiver.address, { gasLimit: 500000 });
+    await proxy.removeSigner(receiver.address, { gasLimit: 3_000_000_000 });
 
     isSigner = await proxy.isLinkdropSigner(receiver.address);
     expect(isSigner).to.eq(false);
@@ -245,21 +249,21 @@ describe("ETH/ERC20 linkdrop tests", () => {
       nonsender
     );
     // Pausing
-    await expect(proxyInstance.pause({ gasLimit: 500000 })).to.be.revertedWith(
+    await expect(proxyInstance.pause({ gasLimit: 3_000_000_000 })).to.be.revertedWith(
       "ONLY_LINKDROP_MASTER"
     );
   });
 
   it("linkdropMaster should be able to pause contract", async () => {
     // Pausing
-    await proxy.pause({ gasLimit: 500000 });
+    await proxy.pause({ gasLimit: 3_000_000_000 });
     let paused = await proxy.paused();
     expect(paused).to.eq(true);
   });
 
   it("linkdropMaster should be able to unpause contract", async () => {
     // Unpausing
-    await proxy.unpause({ gasLimit: 500000 });
+    await proxy.unpause({ gasLimit: 3_000_000_000 });
     let paused = await proxy.paused();
     expect(paused).to.eq(false);
   });
@@ -275,7 +279,7 @@ describe("ETH/ERC20 linkdrop tests", () => {
       chainId,
       proxyAddress
     );
-    await expect(proxy.cancel(link.linkId, { gasLimit: 200000 })).to.emit(
+    await expect(proxy.cancel(link.linkId, { gasLimit: 3_000_000_000 })).to.emit(
       proxy,
       "Canceled"
     );
@@ -302,7 +306,7 @@ describe("ETH/ERC20 linkdrop tests", () => {
     );
 
     // Pausing
-    await proxy.pause({ gasLimit: 500000 });
+    await proxy.pause({ gasLimit: 3_000_000_000 });
 
     await expect(
       factory.checkClaimParams(
@@ -324,7 +328,7 @@ describe("ETH/ERC20 linkdrop tests", () => {
     factory = factory.connect(relayer);
 
     // Unpause
-    await proxy.unpause({ gasLimit: 500000 });
+    await proxy.unpause({ gasLimit: 3_000_000_000 });
 
     link = await createLink(
       linkdropSigner,
@@ -354,7 +358,7 @@ describe("ETH/ERC20 linkdrop tests", () => {
         link.linkdropSignerSignature,
         receiverAddress,
         receiverSignature,
-        { gasLimit: 500000 }
+        { gasLimit: 3_000_000_000 }
       )
     ).to.be.revertedWith("INSUFFICIENT_ALLOWANCE");
   });
@@ -391,7 +395,7 @@ describe("ETH/ERC20 linkdrop tests", () => {
         link.linkdropSignerSignature,
         receiverAddress,
         receiverSignature,
-        { gasLimit: 500000 }
+        { gasLimit: 3_000_000_000 }
       )
     ).to.be.revertedWith("LINK_EXPIRED");
   });
@@ -430,7 +434,7 @@ describe("ETH/ERC20 linkdrop tests", () => {
         link.linkdropSignerSignature,
         receiverAddress,
         receiverSignature,
-        { gasLimit: 500000 }
+        { gasLimit: 3_000_000_000 }
       )
     ).to.be.revertedWith("INVALID_LINKDROP_SIGNER_SIGNATURE");
   });
@@ -468,7 +472,7 @@ describe("ETH/ERC20 linkdrop tests", () => {
         link.linkdropSignerSignature,
         receiverAddress,
         receiverSignature,
-        { gasLimit: 500000 }
+        { gasLimit: 3_000_000_000 }
       )
     ).to.be.revertedWith("INVALID_LINKDROP_SIGNER_SIGNATURE");
   });
@@ -509,7 +513,7 @@ describe("ETH/ERC20 linkdrop tests", () => {
       link.linkdropSignerSignature,
       receiverAddress,
       receiverSignature,
-      { gasLimit: 800000 }
+      { gasLimit: 3_000_000_000 }
     );
 
     let approverBalanceAfter = await tokenInstance.balanceOf(
@@ -543,7 +547,7 @@ describe("ETH/ERC20 linkdrop tests", () => {
         link.linkdropSignerSignature,
         receiverAddress,
         receiverSignature,
-        { gasLimit: 500000 }
+        { gasLimit: 3_000_000_000 }
       )
     ).to.be.revertedWith("LINK_CLAIMED");
   });
@@ -583,7 +587,7 @@ describe("ETH/ERC20 linkdrop tests", () => {
         link.linkdropSignerSignature,
         receiverAddress,
         receiverSignature,
-        { gasLimit: 800000 }
+        { gasLimit: 3_000_000_000 }
       )
     ).to.be.revertedWith("INSUFFICIENT_TOKENS");
   });
@@ -611,7 +615,7 @@ describe("ETH/ERC20 linkdrop tests", () => {
         fakeSignature,
         receiverAddress,
         receiverSignature,
-        { gasLimit: 500000 }
+        { gasLimit: 3_000_000_000 }
       )
     ).to.be.revertedWith("INVALID_LINKDROP_SIGNER_SIGNATURE");
   });
@@ -655,7 +659,7 @@ describe("ETH/ERC20 linkdrop tests", () => {
         link.linkdropSignerSignature,
         receiverAddress,
         receiverSignature,
-        { gasLimit: 500000 }
+        { gasLimit: 3_000_000_000 }
       )
     ).to.be.revertedWith("INVALID_RECEIVER_SIGNATURE");
   });
@@ -691,7 +695,7 @@ describe("ETH/ERC20 linkdrop tests", () => {
         link.linkdropSignerSignature,
         receiverAddress,
         receiverSignature,
-        { gasLimit: 500000 }
+        { gasLimit: 3_000_000_000 }
       )
     ).to.be.revertedWith("LINK_CANCELED");
   });
@@ -742,7 +746,7 @@ describe("ETH/ERC20 linkdrop tests", () => {
         link.linkdropSignerSignature,
         receiverAddress,
         receiverSignature,
-        { gasLimit: 500000 }
+        { gasLimit: 3_000_000_000 }
       )
     ).to.emit(proxy, "Claimed");
   });
@@ -750,7 +754,7 @@ describe("ETH/ERC20 linkdrop tests", () => {
   it("should be able to withdraw ethers from proxy to linkdropMaster", async () => {
     let balanceBefore = await provider.getBalance(proxy.address);
     expect(balanceBefore).to.not.eq(0);
-    await proxy.withdraw({ gasLimit: 200000 });
+    await proxy.withdraw({ gasLimit: 3_000_000_000 });
     let balanceAfter = await provider.getBalance(proxy.address);
     expect(balanceAfter).to.eq(0);
   });
@@ -802,7 +806,7 @@ describe("ETH/ERC20 linkdrop tests", () => {
       link.linkdropSignerSignature,
       receiverAddress,
       receiverSignature,
-      { gasLimit: 500000 }
+      { gasLimit: 3_000_000_000 }
     );
 
     let proxyEthBalanceAfter = await provider.getBalance(proxy.address);

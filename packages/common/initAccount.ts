@@ -12,19 +12,23 @@ export function transfer(api, signer, address, amount) {
   });
 }
 
-export async function initWallet(
+export async function initAccount(
+  provider,
   wallets,
   amount = 10_000_000_000_000_000_000_000n
 ) {
+  await provider.api.isReady;
+  await provider.init();
   const pairs = testingPairs.createTestPairs();
-  const api = wallets[0].provider.api;
-
-  await api.isReady;
 
   for (const wallet of wallets) {
-    await wallet.provider.init();
-    await transfer(api, pairs.alice, wallet.keyringPair.address, amount);
-    await wallets.claimEvmAccounts();
+    await transfer(
+      provider.api,
+      pairs.alice,
+      wallet.keyringPair.address,
+      amount
+    );
+    await wallet.claimEvmAccounts();
   }
 
   console.log("init success");

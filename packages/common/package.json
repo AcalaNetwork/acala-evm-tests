@@ -4,6 +4,6 @@
   "main": "index.ts",
   "dependencies": {
     "@acala-network/api": "^0.4.0-beta.32",
-    "@acala-network/bodhi": "^0.1.1"
+    "@acala-network/bodhi": "^0.1.2-0"
   }
 }

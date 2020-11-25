@@ -1,9 +1,7 @@
-import { Wallet } from "@acala-network/bodhi";
+import { Wallet, Provider } from "@acala-network/bodhi";
 import { getProvider } from "./getProvider";
 
-export function createWallet(numbers = 5) {
-  const provider = getProvider();
-
+export function createWallet(provider: Provider, numbers = 5) {
   const wallets = [];
 
   for (let i = 0; i < numbers; i++) {
@@ -16,9 +14,7 @@ export function createWallet(numbers = 5) {
   });
 }
 
-export function getWallets() {
-  const provider = getProvider();
-
+export function getWallets(provider: Provider) {
   const wallets = [
     "0xaa397267eaee48b2262a973fdcab384a758f39a3ad8708025cfb675bb9effc20",
     "0x89a3bbcccd076b53051f391989b5fab75e8caee2d6a3faaf73be2fbedf3fa722",

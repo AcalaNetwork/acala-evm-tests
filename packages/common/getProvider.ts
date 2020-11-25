@@ -12,7 +12,7 @@ export function getProvider() {
     }
   );
 
-  const dataProvider = new DataProvider.DataProvider(db);
+  const dataProvider = new DataProvider(db);
 
   return new Provider(
     options({

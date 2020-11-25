@@ -3,23 +3,22 @@
 import chai from "chai";
 import { ethers } from "ethers";
 
-import { deployContract, MockProvider, solidity } from "ethereum-waffle";
+import { deployContract, solidity } from "ethereum-waffle";
+import { initWallets } from "../utils/initWallets";
+import { initAccount } from "common";
 
-import LinkdropFactory from "../build/LinkdropFactory";
-import LinkdropMastercopy from "../build/LinkdropMastercopy";
-import TokenMock from "../build/TokenMock";
+import LinkdropFactory from "../build/LinkdropFactory.json";
+import LinkdropMastercopy from "../build/LinkdropMastercopy.json";
+import TokenMock from "../build/TokenMock.json";
 
 import { computeProxyAddress, computeBytecode } from "../scripts/utils";
-import { getWallet, getProvider, createWallet } from "common";
 
 chai.use(solidity);
 const { expect } = chai;
 
-let provider = new MockProvider();
+let { provider, wallets } = initWallets((process.env as any).MOCK);
 
-let [deployer, linkdropMaster, linkdropSigner, relayer] = provider.getWallets(
-  provider
-);
+let [deployer, linkdropMaster, linkdropSigner, relayer] = wallets;
 
 let masterCopy;
 let factory;
@@ -45,12 +44,15 @@ const chainId = 4; // Rinkeby
 
 describe("Campaigns tests", () => {
   before(async () => {
+    if (!(process.env as any).MOCK) {
+      await initAccount(provider, wallets);
+    }
     tokenInstance = await deployContract(linkdropMaster, TokenMock);
   });
 
   it("should deploy master copy of linkdrop implementation", async () => {
     masterCopy = await deployContract(linkdropMaster, LinkdropMastercopy, [], {
-      gasLimit: 6000000,
+      gasLimit: 3_000_000_000,
     });
     expect(masterCopy.address).to.not.eq(ethers.constants.AddressZero);
   });
@@ -62,7 +64,7 @@ describe("Campaigns tests", () => {
       LinkdropFactory,
       [masterCopy.address, chainId],
       {
-        gasLimit: 6000000,
+        gasLimit: 3_000_000_000,
       }
     );
     expect(factory.address).to.not.eq(ethers.constants.AddressZero);
@@ -85,7 +87,7 @@ describe("Campaigns tests", () => {
 
     await expect(
       factory.deployProxyWithSigner(campaignId, linkdropSigner.address, {
-        gasLimit: 6000000,
+        gasLimit: 3_000_000_000,
       })
     ).to.emit(factory, "Deployed");
 
@@ -122,7 +124,7 @@ describe("Campaigns tests", () => {
 
     await expect(
       factory.deployProxy(campaignId, {
-        gasLimit: 6000000,
+        gasLimit: 3_000_000_000,
       })
     ).to.emit(factory, "Deployed");
 
@@ -156,7 +158,7 @@ describe("Campaigns tests", () => {
 
     await expect(
       factory.deployProxy(campaignId, {
-        gasLimit: 6000000,
+        gasLimit: 3_000_000_000,
       })
     ).to.emit(factory, "Deployed");
 
