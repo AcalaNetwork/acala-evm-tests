@@ -1,112 +1,19 @@
-import { options } from "@acala-network/api";
-import { WsProvider } from "@polkadot/api";
-import testingPairs from "@polkadot/keyring/testingPairs";
-import { Provider, Wallet } from "@acala-network/bodhi";
-import { addressToEvm, evmToAddress } from "@polkadot/util-crypto";
-import { Sequelize } from "sequelize";
-import { Op, SyncOptions } from "sequelize";
-import { getContractAddress } from "@ethersproject/address";
+import { Wallet } from "@acala-network/bodhi";
+import { getProvider } from "./getProvider";
 
-export function getProvider() {
-  const db = new Sequelize(
-    "postgres://postgres:postgres@192.168.1.10:5432/postgres",
-    {
-      logging: false,
-    }
-  );
+export function createWallet(numbers = 5) {
+  const provider = getProvider();
 
-  return new Provider(
-    options({
-      provider: new WsProvider("ws://192.168.1.10:9944"),
-      types: {
-        EvmAddress: "H160",
-        CallRequest: {
-          from: "Option<H160>",
-          to: "Option<H160>",
-          gasLimit: "Option<u32>",
-          value: "Option<U256>",
-          data: "Option<Bytes>",
-        },
-        ExitReason: {
-          _enum: {
-            Succeed: "ExitSucceed",
-            Error: "ExitError",
-            Revert: "ExitRevert",
-            Fatal: "ExitFatal",
-          },
-        },
-        ExitSucceed: {
-          _enum: ["Stopped", "Returned", "Suicided"],
-        },
-        ExitError: {
-          _enum: {
-            StackUnderflow: "Null",
-            StackOverflow: "Null",
-            InvalidJump: "Null",
-            InvalidRange: "Null",
-            DesignatedInvalid: "Null",
-            CallTooDeep: "Null",
-            CreateCollision: "Null",
-            CreateContractLimit: "Null",
-            OutOfOffset: "Null",
-            OutOfGas: "Null",
-            OutOfFund: "Null",
-            PCUnderflow: "Null",
-            CreateEmpty: "Null",
-            Other: "Text",
-          },
-        },
-        ExitRevert: {
-          _enum: ["Reverted"],
-        },
-        ExitFatal: {
-          _enum: {
-            NotSupported: "Null",
-            UnhandledInterrupt: "Null",
-            CallErrorAsFatal: "ExitError",
-            Other: "Text",
-          },
-        },
-      },
-      rpc: {
-        evm: {
-          call: {
-            description: "eth call",
-            params: [
-              {
-                name: "data",
-                type: "CallRequest",
-              },
-              {
-                name: "at",
-                type: "BlockHash",
-                isHistoric: true,
-                isOptional: true,
-              },
-            ],
-            type: "Raw",
-          },
-          estimateGas: {
-            description: "eth estimateGas",
-            params: [
-              {
-                name: "data",
-                type: "CallRequest",
-              },
-              {
-                name: "at",
-                type: "BlockHash",
-                isHistoric: true,
-                isOptional: true,
-              },
-            ],
-            type: "u256",
-          },
-        },
-      },
-    }),
-    db
-  );
+  const wallets = [];
+
+  for (let i = 0; i < numbers; i++) {
+    const wallet = Wallet.createRandom();
+    wallets.push(wallet);
+  }
+
+  return wallets.map((wallet) => {
+    return new Wallet(wallet, provider);
+  });
 }
 
 export function getWallet() {
@@ -126,67 +33,3 @@ export function getWallet() {
     return new Wallet(wallet, provider);
   });
 }
-
-export function transfer(api, signer, address) {
-  return new Promise((resolve, reject) => {
-    api.tx.balances
-      .transfer(address, 10_000_000_000_000_000_000_000n)
-      .signAndSend(signer, (result) => {
-        if (result.status.isFinalized || result.status.isInBlock) {
-          resolve();
-        } else if (result.isError) {
-          reject();
-        }
-      });
-  });
-}
-
-export async function initWallet(wallets) {
-  const pairs = testingPairs();
-  const api = wallets[0].provider.api;
-
-  await api.isReady;
-
-  await transfer(api, pairs.alice, wallets[0].keyringPair.address);
-  await transfer(api, pairs.alice, wallets[1].keyringPair.address);
-  await transfer(api, pairs.alice, wallets[2].keyringPair.address);
-  await transfer(api, pairs.alice, wallets[3].keyringPair.address);
-  await transfer(api, pairs.alice, wallets[4].keyringPair.address);
-  await transfer(api, pairs.alice, wallets[5].keyringPair.address);
-  await wallets[0].claimEvmAccounts();
-  await wallets[1].claimEvmAccounts();
-  await wallets[2].claimEvmAccounts();
-  await wallets[3].claimEvmAccounts();
-  await wallets[4].claimEvmAccounts();
-  await wallets[5].claimEvmAccounts();
-  console.log("init success");
-}
-
-// async function run() {
-//   const pairs = testingPairs();
-//   const wallets = getWallet()
-
-//   console.log(wallets[0].keyringPair.address, wallets[0].address)
-
-//   await wallets[0].provider.api.isReady
-
-//   await transfer(wallets[0].provider.api, pairs.bob, wallets[0].keyringPair.address)
-//   console.log('claim')
-//   await wallets[0].claimEvmAccounts()
-
-// }
-
-// run()
-
-// async function run() {
-//   // for(const i of [0,1,2,3,4,5,6,7,8]) {
-//   //   const address = getContractAddress({
-//   //     from: '0x1fCA3c75AC3EbfE39249e75564fED8D1Af5cc27A',
-//   //     nonce: i
-//   //   })
-//   //   console.log('i:', i, ' address:', address)
-//   // }
-//   // getWallet()
-// }
-
-// run()
