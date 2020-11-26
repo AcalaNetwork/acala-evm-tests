@@ -20,9 +20,9 @@ import {
 } from "../scripts/utils";
 
 chai.use(solidity);
-chai.use(function waffleChai(chai, utils) {
-  supportRevertedWith(chai.Assertion);
-});
+// chai.use(function waffleChai(chai, utils) {
+//   supportRevertedWith(chai.Assertion);
+// });
 
 const { expect } = chai;
 

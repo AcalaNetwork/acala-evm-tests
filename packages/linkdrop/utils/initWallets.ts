@@ -1,4 +1,4 @@
-import { getWallets, getProvider, initAccount as _initAccount } from "common";
+import { createWallet, getProvider, initAccount as _initAccount } from "common";
 import { deployContract, MockProvider, solidity } from "ethereum-waffle";
 
 export function initWallets(isMock = false) {
@@ -14,7 +14,7 @@ export function initWallets(isMock = false) {
 
     return {
       provider,
-      wallets: getWallets(provider) as any,
+      wallets: createWallet(provider) as any,
     };
   }
 }

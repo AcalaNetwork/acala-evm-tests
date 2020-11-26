@@ -6,7 +6,7 @@ import { Sequelize } from "sequelize";
 
 export function getProvider() {
   const db = new Sequelize(
-    "postgres://postgres:postgres@127.0.0.1:5432/postgres",
+    "postgres://postgres:postgres@192.168.1.10:5432/postgres",
     {
       logging: false,
     }
@@ -16,7 +16,7 @@ export function getProvider() {
 
   return new Provider(
     options({
-      provider: new WsProvider("ws://127.0.0.1:9944"),
+      provider: new WsProvider("ws://192.168.1.10:9944"),
       types: {
         EvmAddress: "H160",
         CallRequest: {
