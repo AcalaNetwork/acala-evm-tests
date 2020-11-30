@@ -23,7 +23,7 @@ export function getProvider() {
           from: "Option<H160>",
           to: "Option<H160>",
           gasLimit: "Option<u32>",
-          value: "Option<U256>",
+          value: "Option<U128>",
           data: "Option<Bytes>",
         },
         ExitReason: {
@@ -99,7 +99,7 @@ export function getProvider() {
                 isOptional: true,
               },
             ],
-            type: "u256",
+            type: "u128",
           },
         },
       },
