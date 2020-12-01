@@ -6,7 +6,7 @@ import { initAccount } from "common";
 
 import { MockProvider, deployContract, solidity } from "ethereum-waffle";
 import { initWallets } from "../utils/initWallets";
-import { supportRevertedWith } from "../utils/hackRevertedWith";
+import { supportEmit } from "../utils/hackEmit";
 
 import LinkdropFactory from "../build/LinkdropFactory.json";
 import LinkdropMastercopy from "../build/LinkdropMastercopy.json";
@@ -20,9 +20,9 @@ import {
 } from "../scripts/utils";
 
 chai.use(solidity);
-// chai.use(function waffleChai(chai, utils) {
-//   supportRevertedWith(chai.Assertion);
-// });
+chai.use(function waffleChai(chai, utils) {
+  supportEmit(chai.Assertion);
+});
 
 const { expect } = chai;
 
@@ -249,9 +249,9 @@ describe("ETH/ERC20 linkdrop tests", () => {
       nonsender
     );
     // Pausing
-    await expect(proxyInstance.pause({ gasLimit: 3_000_000_000 })).to.be.revertedWith(
-      "ONLY_LINKDROP_MASTER"
-    );
+    await expect(
+      proxyInstance.pause({ gasLimit: 3_000_000_000 })
+    ).to.be.revertedWith("ONLY_LINKDROP_MASTER");
   });
 
   it("linkdropMaster should be able to pause contract", async () => {
@@ -279,10 +279,9 @@ describe("ETH/ERC20 linkdrop tests", () => {
       chainId,
       proxyAddress
     );
-    await expect(proxy.cancel(link.linkId, { gasLimit: 3_000_000_000 })).to.emit(
-      proxy,
-      "Canceled"
-    );
+    await expect(
+      proxy.cancel(link.linkId, { gasLimit: 3_000_000_000 })
+    ).to.emit(proxy, "Canceled");
     let canceled = await proxy.isCanceledLink(link.linkId);
     expect(canceled).to.eq(true);
   });

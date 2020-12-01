@@ -9,10 +9,15 @@ import { initWallets } from "../utils/initWallets";
 
 import LinkdropFactory from "../build/LinkdropFactory.json";
 import LinkdropMastercopy from "../build/LinkdropMastercopy.json";
+import { supportEmit } from "../utils/hackEmit";
 
 import { computeBytecode, computeProxyAddress } from "../scripts/utils";
 
 chai.use(solidity);
+chai.use(function waffleChai(chai, utils) {
+  supportEmit(chai.Assertion);
+});
+
 const { expect } = chai;
 
 let { provider, wallets } = initWallets((process.env as any).MOCK);
@@ -34,7 +39,6 @@ describe("Proxy upgradability tests", () => {
       await initAccount(provider, wallets);
     }
   });
-
 
   it("should deploy initial master copy of linkdrop implementation", async () => {
     masterCopy = await deployContract(deployer, LinkdropMastercopy, [], {

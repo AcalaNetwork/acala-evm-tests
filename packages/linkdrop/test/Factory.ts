@@ -10,6 +10,7 @@ import { initWallets } from "../utils/initWallets";
 import LinkdropFactory from "../build/LinkdropFactory.json";
 import LinkdropMastercopy from "../build/LinkdropMastercopy.json";
 import TokenMock from "../build/TokenMock.json";
+import { supportEmit } from "../utils/hackEmit";
 
 import {
   computeProxyAddress,
@@ -19,6 +20,10 @@ import {
 } from "../scripts/utils";
 
 chai.use(solidity);
+chai.use(function waffleChai(chai, utils) {
+  supportEmit(chai.Assertion);
+});
+
 const { expect } = chai;
 
 let { provider, wallets } = initWallets((process.env as any).MOCK);

@@ -1,42 +1,32 @@
 /* global describe, before, it */
 
 import chai from "chai";
-import { ethers } from "ethers";
 import { initAccount } from "common";
-
-import { MockProvider, deployContract, solidity } from "ethereum-waffle";
-import { initWallets } from "../utils/initWallets";
-import { supportRevertedWith } from "../utils/hackRevertedWith";
-
+import { deployContract, solidity } from "ethereum-waffle";
+import { ethers } from "ethers";
 import LinkdropFactory from "../build/LinkdropFactory.json";
 import LinkdropMastercopy from "../build/LinkdropMastercopy.json";
 import NFTMock from "../build/NFTMock.json";
-
 import {
+  computeBytecode,
   computeProxyAddress,
   createLink,
   signReceiverAddress,
-  computeBytecode,
 } from "../scripts/utils";
-
-import { getWallets, getProvider, createWallet } from "common";
+import { supportEmit } from "../utils/hackEmit";
+import { initWallets } from "../utils/initWallets";
 
 chai.use(solidity);
 chai.use(function waffleChai(chai, utils) {
-  supportRevertedWith(chai.Assertion);
+  supportEmit(chai.Assertion);
 });
+
 const { expect } = chai;
 
 // console.log(getProvider)
 let { provider, wallets } = initWallets((process.env as any).MOCK);
 
-let [
-  linkdropMaster,
-  receiver,
-  nonsender,
-  linkdropSigner,
-  relayer,
-] = wallets;
+let [linkdropMaster, receiver, nonsender, linkdropSigner, relayer] = wallets;
 
 let masterCopy;
 let factory;
@@ -275,9 +265,9 @@ describe("ETH/ERC721 linkdrop tests", () => {
       nonsender
     );
     // Pausing
-    await expect(proxyInstance.pause({ gasLimit: 3_000_000_000 })).to.be.revertedWith(
-      "ONLY_LINKDROP_MASTER"
-    );
+    await expect(
+      proxyInstance.pause({ gasLimit: 3_000_000_000 })
+    ).to.be.revertedWith("ONLY_LINKDROP_MASTER");
   });
 
   it("linkdropMaster should be able to pause contract", async () => {

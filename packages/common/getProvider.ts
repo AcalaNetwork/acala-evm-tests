@@ -1,19 +1,8 @@
 import { options } from "@acala-network/api";
 import { Provider } from "@acala-network/bodhi";
-import { DataProvider } from "@acala-network/bodhi/DataProvider";
 import { WsProvider } from "@polkadot/api";
-import { Sequelize } from "sequelize";
 
 export function getProvider() {
-  const db = new Sequelize(
-    "postgres://postgres:postgres@127.0.0.1:5432/postgres",
-    {
-      logging: false,
-    }
-  );
-
-  const dataProvider = new DataProvider(db);
-
   return new Provider(
     options({
       provider: new WsProvider("ws://127.0.0.1:9944"),
@@ -116,7 +105,6 @@ export function getProvider() {
           },
         },
       },
-    }),
-    dataProvider
+    })
   );
 }

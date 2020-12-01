@@ -10,7 +10,7 @@
     "ethereum-waffle": "^3.2.1",
     "ethers": "^5.0.22",
     "openzeppelin-solidity": "2.2.0",
-    "waffle": "^0.0.4",
-    "solc": "0.5.10"
+    "solc": "0.5.10",
+    "waffle": "^0.0.4"
   }
 }
