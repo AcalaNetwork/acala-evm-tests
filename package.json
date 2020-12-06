@@ -10,6 +10,9 @@
   "repository": "git@github.com:AcalaNetwork/acala-evm-tests.git",
   "author": "Acala Developers <hello@acala.network>",
   "license": "MIT",
+  "scripts": {
+    "test": "yarn workspace linkdrop run test \"**/*.ts\""
+  },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
