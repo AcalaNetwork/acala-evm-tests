@@ -31,16 +31,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@acala-network/bodhi@npm:^0.1.2-3":
-  version: 0.1.2-3
-  resolution: "@acala-network/bodhi@npm:0.1.2-3"
+"@acala-network/bodhi@npm:^0.1.2-6":
+  version: 0.1.2-6
+  resolution: "@acala-network/bodhi@npm:0.1.2-6"
   dependencies:
-    "@open-web3/dev-config": ^0.1.6
+    "@open-web3/dev-config": ^0.1.10
     "@open-web3/indexer": ^0.6.1
     "@open-web3/scanner": ^0.7.0-beta.5
     "@polkadot/api": ^2.8.1
     ethers: ^5.0.21
-  checksum: c9355b3982946f54a2d26f174a1cacd5fff05d21ca1df3677d12b692ff480bcc36884e724ac75ee262459eb284fdc420cfd90e171a01a94a6846ddcc4c417233
+  checksum: 6b45cae763cec2da69588d87ea9e5ae9ea3a9466956de2583b0e52d037a6f3820b3d013fa7ac2251cec672ef1ef8c8c64fbf851388d74d2f24949e9ec3aa7184
   languageName: node
   linkType: hard
 
@@ -2535,100 +2535,6 @@ __metadata:
     polkadot-exec-vuepress: scripts/polkadot-exec-vuepress.cjs
     polkadot-exec-webpack: scripts/polkadot-exec-webpack.cjs
   checksum: 90f03ba91c5a3e2b9b489345b949e27de2e4b7e066cc12d86a8f2366c2fec921165363b2c638fe5dbeb64ea64ce7dae20e3b75b0befe99d409d247e7d9700b95
-  languageName: node
-  linkType: hard
-
-"@open-web3/dev-config@npm:^0.1.6":
-  version: 0.1.6
-  resolution: "@open-web3/dev-config@npm:0.1.6"
-  dependencies:
-    "@babel/cli": ^7.12.1
-    "@babel/core": ^7.12.3
-    "@babel/plugin-proposal-class-properties": ^7.12.1
-    "@babel/plugin-proposal-decorators": ^7.12.1
-    "@babel/plugin-proposal-nullish-coalescing-operator": ^7.12.1
-    "@babel/plugin-proposal-numeric-separator": ^7.12.5
-    "@babel/plugin-proposal-object-rest-spread": ^7.12.1
-    "@babel/plugin-proposal-optional-chaining": ^7.12.1
-    "@babel/plugin-proposal-pipeline-operator": ^7.12.1
-    "@babel/plugin-proposal-private-methods": ^7.12.1
-    "@babel/plugin-syntax-bigint": ^7.8.3
-    "@babel/plugin-syntax-dynamic-import": ^7.8.3
-    "@babel/plugin-syntax-import-meta": ^7.10.4
-    "@babel/plugin-syntax-top-level-await": ^7.12.1
-    "@babel/plugin-transform-runtime": ^7.12.1
-    "@babel/preset-env": ^7.12.1
-    "@babel/preset-react": ^7.12.5
-    "@babel/preset-typescript": ^7.12.1
-    "@babel/register": ^7.12.1
-    "@babel/runtime": ^7.12.5
-    "@rushstack/eslint-patch": ^1.0.6
-    "@typescript-eslint/eslint-plugin": 4.8.1
-    "@typescript-eslint/parser": 4.8.1
-    "@vue/component-compiler-utils": ^3.2.0
-    babel-jest: ^26.6.3
-    babel-plugin-module-extension-resolver: ^1.0.0-rc.1
-    babel-plugin-module-resolver: ^4.0.0
-    babel-plugin-styled-components: ^1.11.1
-    browserslist: ^4.14.7
-    chalk: ^4.1.0
-    coveralls: ^3.1.0
-    eslint: ^7.13.0
-    eslint-config-prettier: ^6.15.0
-    eslint-config-standard: ^16.0.2
-    eslint-import-resolver-node: ^0.3.4
-    eslint-plugin-header: ^3.1.0
-    eslint-plugin-import: ^2.22.1
-    eslint-plugin-node: ^11.1.0
-    eslint-plugin-prettier: ^3.1.4
-    eslint-plugin-promise: ^4.2.1
-    eslint-plugin-react: ^7.21.5
-    eslint-plugin-react-hooks: ^4.2.0
-    eslint-plugin-sort-destructure-keys: ^1.3.5
-    fs-extra: ^9.0.1
-    gh-pages: ^3.1.0
-    gh-release: ^4.0.3
-    glob: ^7.1.6
-    glob2base: ^0.0.12
-    jest: ^26.6.3
-    jest-cli: ^26.6.3
-    jest-config: ^26.6.3
-    jest-haste-map: ^26.6.2
-    jest-resolve: ^26.6.2
-    madge: ^3.12.0
-    minimatch: ^3.0.4
-    mkdirp: ^1.0.4
-    prettier: ^2.1.2
-    rimraf: ^3.0.2
-    typedoc: ^0.19.2
-    typedoc-plugin-markdown: ^3.0.11
-    typedoc-plugin-no-inherit: ^1.2.0
-    typescript: ^4.0.5
-    yargs: ^16.1.1
-  bin:
-    polkadot-ci-ghact-build: scripts/polkadot-ci-ghact-build.cjs
-    polkadot-ci-ghact-docs: scripts/polkadot-ci-ghact-docs.cjs
-    polkadot-ci-ghpages-force: scripts/polkadot-ci-ghpages-force.cjs
-    polkadot-dev-build-docs: scripts/polkadot-dev-build-docs.cjs
-    polkadot-dev-build-ts: scripts/polkadot-dev-build-ts.cjs
-    polkadot-dev-circular: scripts/polkadot-dev-circular.cjs
-    polkadot-dev-clean-build: scripts/polkadot-dev-clean-build.cjs
-    polkadot-dev-copy-to: scripts/polkadot-dev-copy-to.cjs
-    polkadot-dev-run-lint: scripts/polkadot-dev-run-lint.cjs
-    polkadot-dev-run-prettier: scripts/polkadot-dev-run-prettier.cjs
-    polkadot-dev-run-test: scripts/polkadot-dev-run-test.cjs
-    polkadot-dev-version: scripts/polkadot-dev-version.cjs
-    polkadot-dev-yarn-only: scripts/polkadot-dev-yarn-only.cjs
-    polkadot-exec-eslint: scripts/polkadot-exec-eslint.cjs
-    polkadot-exec-ghpages: scripts/polkadot-exec-ghpages.cjs
-    polkadot-exec-ghrelease: scripts/polkadot-exec-ghrelease.cjs
-    polkadot-exec-lerna: scripts/polkadot-exec-lerna.cjs
-    polkadot-exec-prettier: scripts/polkadot-exec-prettier.cjs
-    polkadot-exec-tsc: scripts/polkadot-exec-tsc.cjs
-    polkadot-exec-typedoc: scripts/polkadot-exec-typedoc.cjs
-    polkadot-exec-vuepress: scripts/polkadot-exec-vuepress.cjs
-    polkadot-exec-webpack: scripts/polkadot-exec-webpack.cjs
-  checksum: fe6bb69f8035eb41a8f9b3bca5b1b50c22bbd1008cc8e9c1c3a407d0abd124ec6e24f1a4fd63390de02c49738f9bc0f93b88ae647df9b5282b903ff05e4185f3
   languageName: node
   linkType: hard
 
@@ -5995,7 +5901,7 @@ __metadata:
   resolution: "common@workspace:packages/common"
   dependencies:
     "@acala-network/api": ^0.4.0-beta.32
-    "@acala-network/bodhi": ^0.1.2-3
+    "@acala-network/bodhi": ^0.1.2-6
   languageName: unknown
   linkType: soft
 
