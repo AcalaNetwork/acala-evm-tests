@@ -10,6 +10,10 @@ Run tests:
 - Install deps: `yarn`
 - Run all tests: `yarn test`
 
+## Run demo
+
+- `yarn ts-node packages/demo/transfer.ts`
+
 ---
 
 ## Run scanner 

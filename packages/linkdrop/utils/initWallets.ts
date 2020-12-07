@@ -1,5 +1,5 @@
 import { createWallet, getProvider, initAccount as _initAccount } from "common";
-import { deployContract, MockProvider, solidity } from "ethereum-waffle";
+import { MockProvider } from "ethereum-waffle";
 
 export function initWallets(isMock = false) {
   if (isMock) {
