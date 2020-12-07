@@ -1,24 +1,34 @@
 # acala-evm-tests
 
-Run tests: `yarn test`
+Run Acala node:
 
-## run scanner 
+- Clone Acala: https://github.com/AcalaNetwork/Acala
+- Run with Ethereum compatible mode: `make run-eth`
 
-### start db
+Run tests:
+
+- Install deps: `yarn`
+- Run all tests: `yarn test`
+
+---
+
+## Run scanner 
+
+### Start db
 
 ```bash
 $ cd packages/indexer
 $ docker-compose up
 ```
 
-### remove db
+### Remove db
 
 ```bash
 $ cd packages/indexer
 $ docker-compose stop && docker-compose rm
 ```
 
-### start indexer
+### Start indexer
 
 ```bash
 $ yarn workspace indexer run start
