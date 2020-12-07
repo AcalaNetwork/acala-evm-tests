@@ -5,7 +5,7 @@ import { WsProvider } from "@polkadot/api";
 export function getProvider() {
   return new Provider(
     options({
-      provider: new WsProvider("ws://192.168.1.10:9944"),
+      provider: new WsProvider("ws://localhost:9944"),
       typesAlias: {
         evm: {
           AccountInfo: "EvmAccountInfo",

@@ -1,6 +1,6 @@
 # acala-evm-tests
 
-Run tests: `yarn workspace linkdrop run test "**/*.ts"`
+Run tests: `yarn test`
 
 ## run scanner 
 

@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "npx waffle .waffle",
-    "test": "TS_NODE_TRANSPILE_ONLY=true npx mocha -r ts-node/register -r tsconfig-paths/register --timeout 60000"
+    "build": "waffle .waffle",
+    "test": "TS_NODE_TRANSPILE_ONLY=true mocha -r ts-node/register -r tsconfig-paths/register --timeout 60000"
   },
   "dependencies": {
     "ethereum-waffle": "^3.2.1",
