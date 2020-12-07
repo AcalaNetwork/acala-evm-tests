@@ -9,8 +9,10 @@
   "dependencies": {
     "ethereum-waffle": "^3.2.1",
     "ethers": "^5.0.22",
+    "mocha": "^8.2.1",
     "openzeppelin-solidity": "2.2.0",
     "solc": "0.5.10",
+    "ts-node": "^9.1.0",
     "waffle": "^0.0.4"
   }
 }
