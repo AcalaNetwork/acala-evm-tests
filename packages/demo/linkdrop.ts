@@ -2,19 +2,22 @@ import LinkdropFactory from "linkdrop/build/LinkdropFactory.json";
 import LinkdropMastercopy from "linkdrop/build/LinkdropMastercopy.json";
 import ERC20 from "linkdrop/build/ERC20.json";
 
-import { ethers } from "ethers";
+import { ethers, ContractFactory, Signer } from "ethers";
 
 import { createWallet, getProvider, initAccount } from "common";
 import {
   computeProxyAddress,
   createLink,
   signReceiverAddress,
-  computeBytecode,
 } from "linkdrop/scripts/utils";
 
 const DOT = '0x0000000000000000000000000000000000000802'
 const chainId = 595
 const initcode = "0x6352c7420d6000526103ff60206004601c335afa6040516060f3"
+
+const deployContract = (signer: Signer, contract: any, ...args: any[]) => {
+return ContractFactory.fromSolidity(contract).connect(signer).deploy(...args)
+}
 
 const main = async () => {
   const provider = getProvider()
@@ -23,7 +26,7 @@ const main = async () => {
 
   await initAccount(provider, wallets)
 
-  let [linkdropMaster, linkdropSigner, receiverAddress] = wallets
+  let [linkdropMaster, linkdropSigner, receiver] = wallets
 
   const tokenInstance = new ethers.Contract(
     DOT,
@@ -34,19 +37,20 @@ const main = async () => {
   const bal = await tokenInstance.balanceOf(linkdropMaster.address)
   console.log(bal.toString())
 
-  const masterCopy = await deployContract(linkdropMaster, LinkdropMastercopy, [], {
-    gasLimit: 300_000_000,
-  });
+  const masterCopy = await deployContract(linkdropMaster, LinkdropMastercopy);
 
-  const bytecode = computeBytecode(masterCopy.address);
+  console.log(masterCopy.address)
+
   const factory = await deployContract(
     linkdropMaster,
     LinkdropFactory,
-    [masterCopy.address, chainId],
+    masterCopy.address, chainId,
     {
       gasLimit: 300_000_000,
     }
   );
+
+  console.log(factory.address)
 
   const campaignId = 0;
 
@@ -83,8 +87,41 @@ const main = async () => {
 
   const receiverSignature = await signReceiverAddress(
     link.linkKey,
-    receiverAddress
+    receiver.address
   );
+
+  const approverBalanceBefore = await tokenInstance.balanceOf(
+    linkdropMaster.address
+  );
+
+  const receiverTokenBalanceBefore = await tokenInstance.balanceOf(receiver.address);
+
+  await factory.claim(
+    0,
+    tokenInstance.address,
+    ethers.utils.parseEther('2'),
+    1000,
+    link.linkId,
+    linkdropMaster.address,
+    campaignId,
+    link.linkdropSignerSignature,
+    receiver.address,
+    receiverSignature,
+    { gasLimit: 3_000_000_000 }
+  );
+
+  const approverBalanceAfter = await tokenInstance.balanceOf(
+    linkdropMaster.address
+  );
+
+  const receiverTokenBalanceAfter = await tokenInstance.balanceOf(receiver.address);
+
+  console.log({
+    approverBalanceBefore: approverBalanceBefore.toString(),
+    approverBalanceAfter: approverBalanceAfter.toString(),
+    receiverTokenBalanceBefore: receiverTokenBalanceBefore.toString(),
+    receiverTokenBalanceAfter: receiverTokenBalanceAfter.toString(),
+  })
 }
 
 main().then(() => process.exit(0))
