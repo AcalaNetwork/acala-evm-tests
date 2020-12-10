@@ -10,11 +10,7 @@ const run = async () => {
   const indexer = await Indexer.create({
     dbUrl,
     wsUrl,
-    types: {
-      Address: "GenericMultiAddress",
-      LookupSource: "GenericMultiAddress",
-      ...acalaOptions.types,
-    },
+    types: acalaOptions.types as any,
     typesAlias: acalaOptions.typesAlias,
     typesSpec: acalaOptions.typesSpec as any,
     typesChain: acalaOptions.typesChain as any,

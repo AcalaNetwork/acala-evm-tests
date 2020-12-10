@@ -31,16 +31,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@acala-network/bodhi@npm:^0.1.2-7":
-  version: 0.1.2-7
-  resolution: "@acala-network/bodhi@npm:0.1.2-7"
+"@acala-network/bodhi@npm:^0.1.2-9":
+  version: 0.1.2-9
+  resolution: "@acala-network/bodhi@npm:0.1.2-9"
   dependencies:
     "@open-web3/dev-config": ^0.1.10
-    "@open-web3/indexer": ^0.8.2-2
-    "@open-web3/scanner": ^0.8.2-2
+    "@open-web3/indexer": ^0.8.2-3
+    "@open-web3/scanner": ^0.8.2-3
     "@polkadot/api": ^2.10.1
     ethers: ^5.0.21
-  checksum: 30dbd16014615e9e553154597f8360302e323ccf3805ca80d9bc2d7eaf81ad6dc7e8c31ebf61053f91cd3c89c3797ca4b8ac05034d4655defdd7289a48a40e82
+  checksum: 94979ed90ec002f77d5f23050fa6bdb74e8957c4c03fe5508772dbc4466a135fad483fb1cf6955a3f86b4ca4da8d353616482d78246e9aad6c457200fc70ff73
   languageName: node
   linkType: hard
 
@@ -2468,18 +2468,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-web3/indexer@npm:^0.8.2-2":
-  version: 0.8.2-2
-  resolution: "@open-web3/indexer@npm:0.8.2-2"
+"@open-web3/indexer@npm:^0.8.2-3":
+  version: 0.8.2-3
+  resolution: "@open-web3/indexer@npm:0.8.2-3"
   dependencies:
-    "@open-web3/scanner": ^0.8.2-2
+    "@open-web3/scanner": ^0.8.2-3
     pg: ^8.4.2
     rxjs: ^6.6.3
     sequelize: ^6.3.5
     winston: ^3.2.1
   peerDependencies:
     "@polkadot/api": ^2.10.1
-  checksum: 70ce914d62b063cb63f8d62eefadab8cd5f4fc6226fb0f158e364f2aabdf5b2d39044f61700e7efbc2f9236d082ff4a9d1c15417d29548e76a24a9d7d8be2f46
+  checksum: 9647093498d4979ff428e28316ce2e0d5e75ddeda7db443d0920bbe4372dfc3276194313bed4a27222d17fa49dafcffe55e139576a71d670e531b165677cad44
   languageName: node
   linkType: hard
 
@@ -2516,13 +2516,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-web3/scanner@npm:^0.8.2-2":
-  version: 0.8.2-2
-  resolution: "@open-web3/scanner@npm:0.8.2-2"
+"@open-web3/scanner@npm:^0.8.2-3":
+  version: 0.8.2-3
+  resolution: "@open-web3/scanner@npm:0.8.2-3"
   peerDependencies:
     "@polkadot/api": ^2.10.1
     "@polkadot/metadata": ^2.10.1
-  checksum: 04f1c63ecfbc1beee7854e43b3f05ce2c92c10bd786a3371a55bc209a6648e99ab1f7d84c49ef2d0f1cb2296229119148aedbdf5c5a268acf80131cd6ec56c15
+  checksum: cc7533ddca204bd420aaed84d51fabac130ee04d15d3b5e7c91289210772154200f32b55df27024f7c22cc154860e69db82f1cbae0366f1e386c2d661db73f6a
   languageName: node
   linkType: hard
 
@@ -5547,7 +5547,7 @@ __metadata:
   resolution: "common@workspace:packages/common"
   dependencies:
     "@acala-network/api": ^0.5.1
-    "@acala-network/bodhi": ^0.1.2-7
+    "@acala-network/bodhi": ^0.1.2-9
   languageName: unknown
   linkType: soft
 
@@ -9264,7 +9264,7 @@ fsevents@~2.1.2:
   resolution: "indexer@workspace:packages/indexer"
   dependencies:
     "@acala-network/api": ^0.5.1
-    "@open-web3/indexer": ^0.8.2-2
+    "@open-web3/indexer": ^0.8.2-3
     "@polkadot/api": ^2.10.1
   languageName: unknown
   linkType: soft
