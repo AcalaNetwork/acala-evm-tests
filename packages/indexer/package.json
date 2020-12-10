@@ -7,8 +7,8 @@
     "start": "node -r ts-node/register index.ts"
   },
   "dependencies": {
-    "@acala-network/api": "^0.4.0-beta.32",
-    "@open-web3/indexer": "^0.6.1",
-    "@polkadot/api": "2.9.1"
+    "@acala-network/api": "^0.5.1",
+    "@open-web3/indexer": "^0.8.2-2",
+    "@polkadot/api": "^2.10.1"
   }
 }
