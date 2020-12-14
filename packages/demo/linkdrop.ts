@@ -114,6 +114,18 @@ const main = async () => {
 
   const factoryWithRelayer = factory.connect(relayer);
 
+  console.log({
+    linkdropMaster: linkdropMaster.address,
+    linkdropSigner: linkdropSigner.address,
+    receiver: receiver.address,
+    relayer: relayer.address,
+    tokenInstance: tokenInstance.address,
+    masterCopy: masterCopy.address,
+    factory: factory.address,
+    proxy: proxy.address,
+    link
+  })
+
   await factoryWithRelayer.claim(
     weiAmount,
     tokenAddress,
