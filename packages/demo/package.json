@@ -6,6 +6,6 @@
   "scripts": {},
   "dependencies": {
     "ethers": "^5.0.22",
-    "ts-node": "^9.1.0"
+    "ts-node": "^9.1.1"
   }
 }
