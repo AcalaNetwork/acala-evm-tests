@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.ts",
   "dependencies": {
-    "@acala-network/api": "^0.5.1",
-    "@acala-network/bodhi": "^0.1.2-9"
+    "@acala-network/api": "^0.6.2-4",
+    "@acala-network/bodhi": "^0.1.2-15"
   }
 }
