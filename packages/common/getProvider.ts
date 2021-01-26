@@ -4,6 +4,6 @@ import { WsProvider } from "@polkadot/api";
 
 export function getProvider() {
   return new Provider({
-    provider: new WsProvider("ws://192.168.50.10:9944"),
+    provider: new WsProvider(process.env.WS_URL || "ws://127.0.0.1:9944"),
   });
 }
