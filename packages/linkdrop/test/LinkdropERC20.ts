@@ -144,6 +144,11 @@ describe("ETH/ERC20 linkdrop tests", () => {
     let isSigner = await proxyInstance.isLinkdropSigner(receiver.address);
     expect(isSigner).to.eq(true);
 
+    console.log('master address:', await linkdropMaster.getAddress())
+    console.log('nonsender address:', await nonsender.getAddress())
+    console.log('proxyInstance signer address:', await proxyInstance.signer.getAddress())
+
+    // , receiver, nonsender
     await expect(
       proxyInstance.removeSigner(receiver.address, { gasLimit: 4_000_000_001 })
     ).to.be.revertedWith("ONLY_LINKDROP_MASTER");
