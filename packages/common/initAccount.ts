@@ -14,13 +14,15 @@ export function transfer(api, signer, address, amount) {
 
 export function transferDOT(api, signer, address, amount) {
   return new Promise<void>((resolve, reject) => {
-    api.tx.currencies.transfer(address, { Token: 'DOT' }, amount).signAndSend(signer, (result) => {
-      if (result.status.isFinalized || result.status.isInBlock) {
-        resolve();
-      } else if (result.isError) {
-        reject();
-      }
-    });
+    api.tx.currencies
+      .transfer(address, { Token: "DOT" }, amount)
+      .signAndSend(signer, (result) => {
+        if (result.status.isFinalized || result.status.isInBlock) {
+          resolve();
+        } else if (result.isError) {
+          reject();
+        }
+      });
   });
 }
 
@@ -31,6 +33,7 @@ export async function initAccount(
 ) {
   await provider.api.isReady;
   await provider.init();
+
   const pairs = testingPairs.createTestPairs();
 
   for (const wallet of wallets) {
@@ -46,6 +49,6 @@ export async function initAccount(
       wallet.keyringPair.address,
       amount
     );
-    await wallet.claimEvmAccounts();
+    await wallet.claimEvmAccount();
   }
 }

@@ -23,7 +23,6 @@ chai.use(function waffleChai(chai, utils) {
 
 const { expect } = chai;
 
-// console.log(getProvider)
 let { provider, wallets } = initWallets((process.env as any).MOCK);
 
 let [linkdropMaster, receiver, nonsender, linkdropSigner, relayer] = wallets;
@@ -55,10 +54,6 @@ describe("ETH/ERC721 linkdrop tests", () => {
       await initAccount(provider, wallets);
     }
     nftInstance = await deployContract(linkdropMaster, NFTMock);
-  });
-
-  before(async () => {
-    console.log("2");
   });
 
   it("should deploy master copy of linkdrop implementation", async () => {

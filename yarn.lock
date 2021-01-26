@@ -31,16 +31,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@acala-network/bodhi@npm:^0.1.2-15":
-  version: 0.1.2-16
-  resolution: "@acala-network/bodhi@npm:0.1.2-16"
+"@acala-network/bodhi@npm:^0.2.2-7":
+  version: 0.2.2-7
+  resolution: "@acala-network/bodhi@npm:0.2.2-7"
   dependencies:
+    "@acala-network/api": ^0.6.2-4
     "@open-web3/dev-config": ^0.1.10
-    "@open-web3/indexer": ^0.8.2-4
-    "@open-web3/scanner": ^0.8.2-4
-    "@polkadot/api": ^3.0.1
+    "@open-web3/indexer": ^0.8.2-5
+    "@open-web3/scanner": ^0.8.2-5
+    "@types/chai": ^4.2.14
     ethers: ^5.0.21
-  checksum: d6afbad2be7db1509c9ee225427831cdf4ac0f75738d86fea7e52d30001a9db399326010743311d8ab8f336a6f656a6ab7a51c2c7efb98155d8723e705327c4c
+  checksum: 5e91aaaa6afdf05dd7f4807ae302ce5cba8d5195d9e485cea53a932c363766f54f97da2874e80b64764c1257878825db10b6e5d0a008a7100c4826a61cc83d2f
   languageName: node
   linkType: hard
 
@@ -2483,7 +2484,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-web3/indexer@npm:^0.8.2-4, @open-web3/indexer@npm:^0.8.2-5":
+"@open-web3/indexer@npm:^0.8.2-5":
   version: 0.8.2-5
   resolution: "@open-web3/indexer@npm:0.8.2-5"
   dependencies:
@@ -2531,7 +2532,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-web3/scanner@npm:^0.8.2-4, @open-web3/scanner@npm:^0.8.2-5":
+"@open-web3/scanner@npm:^0.8.2-5":
   version: 0.8.2-5
   resolution: "@open-web3/scanner@npm:0.8.2-5"
   peerDependencies:
@@ -5591,7 +5592,7 @@ __metadata:
   resolution: "common@workspace:packages/common"
   dependencies:
     "@acala-network/api": ^0.6.2-4
-    "@acala-network/bodhi": ^0.1.2-15
+    "@acala-network/bodhi": ^0.2.2-7
   languageName: unknown
   linkType: soft
 

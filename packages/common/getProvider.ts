@@ -3,9 +3,7 @@ import { Provider } from "@acala-network/bodhi";
 import { WsProvider } from "@polkadot/api";
 
 export function getProvider() {
-  return new Provider(
-    options({
-      provider: new WsProvider("ws://localhost:9944")
-    })
-  );
+  return new Provider({
+    provider: new WsProvider("ws://192.168.50.10:9944"),
+  });
 }
