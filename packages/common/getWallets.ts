@@ -13,9 +13,9 @@ export function createWallet(provider: Provider, numbers = 5) {
   }
 
   const keyring = new Keyring();
-  const pair = keyring.createFromUri(u8aToHex(randomBytes(32)));
 
   return wallets.map((wallet) => {
+    const pair = keyring.createFromUri(u8aToHex(randomBytes(32)));
     return new Wallet(provider, pair, wallet);
   });
 }
